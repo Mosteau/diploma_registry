@@ -26,6 +26,7 @@ class DiplomaBlockchain:
 
     def get_accounts(self):
         """Récupère la liste des comptes disponibles"""
+        # Signature par l'établissement (simulation pour le MVP)
         return self.w3.eth.accounts
 
     def get_balance(self, address):
@@ -35,7 +36,7 @@ class DiplomaBlockchain:
 
     def issue_diploma(self, student_name, diploma_name, issuer_address):
         """Émet un nouveau diplôme"""
-        # Simulation pour le MVP
+        # Hash du diplôme (simulation pour le MVP)
         diploma_hash = self.w3.keccak(text=f"{student_name}{diploma_name}{datetime.now().isoformat()}")
         return {
             'success': True,
