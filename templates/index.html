@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Diplômes Blockchain</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+{% extends "layout.html" %}
+
+{% block content %}
+
+        <!-- Informations réseau -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">État du Réseau</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <p>Statut: 
+                        {% if network_info.connected %}
+                        <span class="text-green-500">Connecté</span>
+                        {% else %}
+                        <span class="text-red-500">Déconnecté</span>
+                        {% endif %}
+                    </p>
+                    <p>Réseau ID: {{ network_info.network_id }}</p>
+                    <p>Block actuel: {{ network_info.block_number }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Les routes pour ajouter et vérifier un diplome -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <a href="{{ url_for('issue_diploma') }}" class="block">
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h2 class="text-2xl font-semibold mb-4 text-blue-600">Émettre un Diplôme</h2>
+                    <p class="text-gray-600">Créez et enregistrez un nouveau diplôme sur la blockchain</p>
+                </div>
+            </a>
+            <a href="{{ url_for('verify_diploma') }}" class="block">
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition duration-300">
+                    <h2 class="text-2xl font-semibold mb-4 text-green-600">Vérifier un Diplôme</h2>
+                    <p class="text-gray-600">Vérifiez l'authenticité d'un diplôme existant</p>
+                </div>
+            </a>
+        </div>
+
+<!-- Liste des établissements -->
+<div class="mt-8 bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-semibold mb-4">Établissements Autorisés</h2>
+    <div class="overflow-x-auto">
+        <table class="min-w-full">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Institution</th>
+                    <th class="px-6 py-3 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Adresse Blockchain</th>
+                    <th class="px-6 py-3 bg-gray-50 text-right text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Capacité de Transaction</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                {% for account in accounts %}
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        Institution {{ loop.index }}  <!-- Dans un vrai système, ce serait le nom réel de l'établissement -->
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
+                        {{ account }}
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
+                        {{ blockchain.get_balance(account) }} ETH
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4 text-sm text-gray-600">
+        <p>* Chaque établissement dispose d'une adresse unique sur la blockchain pour émettre et valider les diplômes</p>
+    </div>
+</div>
+    </div>
+</body>
+{% endblock %}
+</html>

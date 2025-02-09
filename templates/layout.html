@@ -1,0 +1,24 @@
+<!-- Header pour l'app avec logo -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Certification des diplômes{% endblock %}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-white shadow-md mb-8">
+        <div class="container mx-auto px-4 py-6 flex items-center justify-between border">
+            <img src="{{ url_for('static', filename='assets/image/logo-application.webp') }}" 
+                 alt="Logo" 
+                 class="h-20 w-20 rounded-full object-cover border-2 border-gray-200">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Système de Gestion des Diplômes</h1>
+            <p class="text-gray-600">Sécurisé par la Blockchain</p>
+        </div>
+    </header>
+    <div class="container mx-auto px-4">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
